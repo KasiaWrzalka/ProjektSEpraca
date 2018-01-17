@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 
@@ -10,7 +10,14 @@ def test(request):
 
 @csrf_exempt
 def vote(request, test_id):
-    print('post')
-    print(request, test_id)
-    return render_to_response('home/index.html')
-    # return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+    try:
+        odp = 'nie ma'
+        if request.POST[('choice')] == 'tak':
+            odp = "Jesteś introwertykiem!"
+        elif request.POST[('choice')] == "nie":
+            odp = "Jesteś extrawertykiem!"
+        else:
+            odp = " Wróć do testu i uzupełnij pytanie"
+        return render(request, 'home/results.html', {'odp': odp})
+    except (KeyError):
+        return render(request, 'home/results.html', {'error_message': "You didn't select a choice."})
