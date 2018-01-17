@@ -1,21 +1,19 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Test</title>
-</head>
-<body>
-<ol>
-  <li>Coffee</li>
-  <li>Tea</li>
-  <li>Milk</li>
-</ol>
+{% extends 'home/base.html' %}
 
-<ul>
-  <li>Coffee</li>
-  <li>Tea</li>
-  <li>Milk</li>
-</ul>
-</body>
-</html>
+{% block content %}
+1. Czy lubisz siedzieć w domu? <br>
+    Tak <br>
+    Nie <br>
+
+    Wyślij <br>
+
+    <form action="{% url 'vote' 1 %}" method="post">
+    {% csrf_token %}
+{#    {% for choice in question.choice_set.all %}#}
+{#        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />#}
+{#        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />#}
+{#    {% endfor %}#}
+    <input type="submit" value="Vote" />
+    </form>
+
+{% endblock %}

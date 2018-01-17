@@ -20,5 +20,6 @@ from home import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
-    path('test/', views.test, name='test')
+    path('test/', views.test, name='test'),
+    path('<int:question_id>/vote/', views.vote, name='vote')
 ]

@@ -25,7 +25,7 @@ SECRET_KEY = '_x77-qqswci^ppw#^*&!&555-1bgs6dfox*#v55d7)sya^n1b%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['kasiawrzalka.pythonanywhere.com']
+ALLOWED_HOSTS = ['kasiawrzalka.pythonanywhere.com', '127.0.0.1']
 
 
 # Application definition
@@ -49,6 +49,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CSRF_COOKIE_SECURE = True
 
 ROOT_URLCONF = 'ProjektSEpraca.urls'
 
