@@ -19,7 +19,7 @@ from home import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index),
-    path('test/', views.test, name='test'),
+    path('', views.IndexView),
+    path('test/', views.TestView, name='test'),
     path('<int:test_id>/vote/', views.vote, name='vote')
 ]
