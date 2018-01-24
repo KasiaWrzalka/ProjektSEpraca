@@ -1,7 +1,9 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-
+    {%  for question in questions %}
+        {{ question }} <br>
+    {% endfor %}
     <form action="{% url 'vote' 1 %}" method="post">
     {% csrf_token %}
         <h1>1. Czy lubisz siedzieć w domu? </h1>

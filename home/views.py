@@ -1,12 +1,13 @@
 from django.shortcuts import render_to_response, render
-from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
+from .models import Questions
 
 def IndexView(request):
     return render_to_response('home/index.html')
 
 def TestView(request):
-    return render_to_response('home/test.html')
+    questions = Questions.objects.all()
+    return render(request, 'home/test.html', {'questions': questions})
 
 @csrf_exempt
 def vote(request, test_id):
@@ -20,3 +21,4 @@ def vote(request, test_id):
         return render(request, 'home/results.html', {'odp': odp})
     except (KeyError):
         return render(request, 'home/results.html', {'odp': "Wysłałeś pustą odpowiedź. Sprójbuj jeszcze raz!."})
+
