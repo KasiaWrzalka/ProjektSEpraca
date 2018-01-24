@@ -77,8 +77,16 @@ WSGI_APPLICATION = 'ProjektSEpraca.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-
-# Con = MySQLdb.Connect(host="127.0.0.1", port=3306, user="sonji1_kasia", passwd="BlCZeM0J", db="sonji1_kasia")
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'sonji1_kasia',
+        'USER': 'sonji1_kasia',
+        'PASSWORD': 'BlCZeM0J',
+        'HOST': 'wrzalka.com',
+        'PORT': '3306',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
