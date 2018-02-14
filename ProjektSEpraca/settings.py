@@ -87,6 +87,7 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+# Con = MySQLdb.Connect(host="127.0.0.1", port=3306, user="sonji1_kasia", passwd="BlCZeM0J", db="sonji1_kasia")
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
