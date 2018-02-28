@@ -4,6 +4,6 @@ from .models import Questions
 
 class MyQuestions(object):
 
-    def all_questions():
-        questions = Questions.objects.all()
+    def all_questions(test_id):
+        questions = Questions.objects.filter(test=test_id)
         return questions

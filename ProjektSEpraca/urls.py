@@ -20,6 +20,6 @@ from home import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.IndexView),
-    path('test/', views.TestView, name='test'),
+    path('test/', views.TestMbtiView, name='test'),
     path('<int:test_id>/vote/', views.vote, name='vote')
 ]

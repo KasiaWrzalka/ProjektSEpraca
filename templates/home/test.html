@@ -1,15 +1,16 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-    {%  for question in questions %}
-        {{ question }} <br>
-    {% endfor %}
     <form action="{% url 'vote' 1 %}" method="post">
     {% csrf_token %}
-        <h1>1. Czy lubisz siedzieć w domu? </h1>
-        <p><input type="radio" name="choice" value="tak" />Tak</p>
-        <p><input type="radio" name="choice" value="nie" />Nie</p>
-
+        {%  for question , value_answers in question_answers.items %}
+            {{ forloop.counter }}. {{ question }} <br>
+            {% for value in value_answers %}
+                <input type="radio" name="answer" id="{{ value }}" value="{{ value }}" />
+                <label for="{{ value }}">{{ value }}</label><br />
+            {% endfor %}
+            <br>
+    {%  endfor %}
     <input type="submit" value="Wyślij!" />
     </form>
 

@@ -18,6 +18,7 @@ class Questions(models.Model): #Pytania do testów
 
 class Factors(models.Model): #Czynniki
     title = models.CharField(max_length=100)
+    letter = models.CharField(max_length=1)
     description = models.CharField(max_length=500)
     test = models.ForeignKey(Tests, on_delete=models.CASCADE) #test_id
 
@@ -25,7 +26,7 @@ class Factors(models.Model): #Czynniki
         return self.title
 
 class Answers(models.Model): #odpowiedzi do pytań
-    value = models.IntegerField()
+    value = models.CharField(max_length=100)
     question = models.ForeignKey(Questions, on_delete=models.CASCADE) #question_id
 
     def __str__(self):
