@@ -4,9 +4,10 @@
     <form action="{% url 'vote' 1 %}" method="post">
     {% csrf_token %}
         {%  for question , value_answers in question_answers.items %}
-            {{ forloop.counter }}. {{ question }} <br>
+            <input type="hidden" name="question" id="{{ question.id }}" value="{{ question.id }}" />
+            <label for="{{ question.id }}">{{ forloop.counter }}. {{ question }} {{ question.id }}</label><br>
             {% for value in value_answers %}
-                <input type="radio" name="answer" id="{{ value }}" value="{{ value }}" />
+                <input type="radio" name="answer-{{ question.id }}" id="{{ value }}" value="{{ value }}" />
                 <label for="{{ value }}">{{ value }}</label><br />
             {% endfor %}
             <br>
