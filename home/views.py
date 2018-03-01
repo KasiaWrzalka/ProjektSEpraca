@@ -15,17 +15,14 @@ def TestMbtiView(request):
 
 @csrf_exempt
 def vote(request, test_id):
-    print(request)
-    print('********************')
-    print(request.POST)
+    questions = MyQuestions.all_questions(1)
     try:
-        if request.POST[('choice')] == 'tak':
-            odp = "Jesteś introwertykiem!"
-        elif request.POST[('choice')] == "nie":
-            odp = "Jesteś extrawertykiem!"
+        if len(questions) == len(request.POST) - 1:
+            odp = u"Super! Uzupełniłeś wszystkie pytania. Twoja odpowiedź to:"
         else:
-            odp = " Wróć do testu i uzupełnij pytanie"
+            odp = u"Uzupełnij wszystkie pytania. Wróć do testu."
         return render(request, 'home/results.html', {'odp': odp})
-    except (KeyError):
+    except KeyError:
+        print(u'błąd')
         return render(request, 'home/results.html', {'odp': "Wysłałeś pustą odpowiedź. Sprójbuj jeszcze raz!."})
 
