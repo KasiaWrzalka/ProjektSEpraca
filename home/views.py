@@ -16,9 +16,11 @@ def TestMbtiView(request):
 @csrf_exempt
 def vote(request, test_id):
     questions = MyQuestions.all_questions(1)
+    questions_answers = dict(request.POST)
+    del questions_answers['csrfmiddlewaretoken']
     try:
         if len(questions) == len(request.POST) - 1:
-            odp = u"Super! Uzupełniłeś wszystkie pytania. Twoja odpowiedź to:"
+            odp = u"Super! Uzupełniłeś wszystkie pytania. Twoja odpowiedź to: " + MyQuestions.result(questions_answers)
         else:
             odp = u"Uzupełnij wszystkie pytania. Wróć do testu."
         return render(request, 'home/results.html', {'odp': odp})
