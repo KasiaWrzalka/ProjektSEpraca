@@ -37,7 +37,7 @@ class AnswersFactors(models.Model):
     factor = models.ForeignKey(Factors, on_delete=models.CASCADE) # factor_id
     answer = models.ForeignKey(Answers, on_delete=models.CASCADE)  # question_id
 
-    def __str__(self):
+    def __int__(self):
         return self.impact
 
 class Results(models.Model): #wyniki testu
