@@ -35,7 +35,7 @@ class Answers(models.Model): #odpowiedzi do pytań
 class AnswersFactors(models.Model):
     impact = models.IntegerField()
     factor = models.ForeignKey(Factors, on_delete=models.CASCADE) # factor_id
-    question = models.ForeignKey(Questions, on_delete=models.CASCADE)  # question_id
+    answer = models.ForeignKey(Answers, on_delete=models.CASCADE)  # question_id
 
     def __str__(self):
         return self.impact
