@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response, render
 from django.views.decorators.csrf import csrf_exempt
-from .models import Questions, AnswersFactors, Conditions, Factors
+from .models import Questions, AnswersFactors, Answers
 
 class MyQuestions(object):
 
@@ -10,24 +10,16 @@ class MyQuestions(object):
 
     def result(questions_answers):
         print(questions_answers)
-        # zliczamy ile zdobyliśmy do pojedyńczych osobowości
+        # chce tylko oodpowiedzi na razie
         a = []
         for k, v in questions_answers.items():
             for i in v:
                 a.append(i)
-        answers = AnswersFactors.objects.filter(answer_id__in=a)
+        answers = Answers.objects.filter(id__in=a)
         odp = ''
-        rozw_dict = {}
         for i in answers:
-            print(i.impact, i.factor.title)
-            odp += ' ' + str(i.impact) + ' ' + str(i.factor.title)
-            if i.factor.id in rozw_dict:
-                rozw_dict[i.factor.id] += i.impact
-            else:
-                rozw_dict[i.factor.id] = i.impact
-        print(rozw_dict)
-        odp += str(rozw_dict)
-
-        # result
-
+            for j in i.answersfactors_set.all():
+                print(j.impact, j.factor)
+                # print(i.answersfactors_set.impact, i.factor.title)
+                # odp += ' ' + str(i.impact) + ' ' + str(i.factor.title)
         return odp

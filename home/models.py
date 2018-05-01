@@ -42,7 +42,8 @@ class AnswersFactors(models.Model):
 
 class Results(models.Model): #wyniki testu
     title = models.CharField(max_length=100)
-    description = models.CharField(max_length=500)
+    name = models.CharField(max_length=100)
+    description = models.CharField(max_length=1000)
     test = models.ForeignKey(Tests, on_delete=models.CASCADE)  # test_id
 
     def __str__(self):
