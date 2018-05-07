@@ -15,9 +15,11 @@ class MyQuestions(object):
         for k, v in questions_answers.items():
             for i in v:
                 a.append(i)
-        answers = Answers.objects.filter(id__in=a)
+        answers = Answers.objects.filter(id__in=a) # <QuerySet [<Answers: Yes>, <Answers: Yes>, <Answers: Yes>]>
+
         odp = ''
         for i in answers:
+            print(i.answersfactors_set.all()) # <QuerySet [<AnswersFactors: AnswersFactors object (11)>, <AnswersFactors: AnswersFactors object (12)>]>
             for j in i.answersfactors_set.all():
                 print(j.impact, j.factor)
                 # print(i.answersfactors_set.impact, i.factor.title)
