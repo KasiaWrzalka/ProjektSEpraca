@@ -2,53 +2,74 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import connection, OperationalError
 from home.models import Questions, AnswersFactors, Answers
 import random
+import itertools
 
 class Command(BaseCommand):
     help = 'Skrypt sprawdzający myślenie, pomagający uzupełnić pytania, faktors, conditions'
 
     # myślenie, skopiowane z logic.py
     def result(self, questions_answers, pytania):
-        # print(questions_answers)
-
         wplywy = {}
         for i, j in questions_answers.items():
             for z in pytania:
                 if z[0] == i:
                     for k in range(1, len(z)):
-                        if z[1][0] == j:
+                        if z[k][0] == j:
                             if z[k][1] not in wplywy:
                                 wplywy[z[k][1]] = z[k][2]
                             else:
                                 wplywy[z[k][1]] += z[k][2]
 
-        print("Suma do losowego testu", wplywy) # {'Introwersja': 2, 'Ekstrawersja': 2, 'Intuicja': 2, 'Poznanie': 2, 'Odczuwanie': 2, 'Myślenie': 2, 'Osądzanie': 1, 'Obserwacja': 1}
-        for k, v in wplywy.items():
 
-        # ESTJ
-        # ESFJ
-        # ESTP
-        # ISFP
-        # ENFJ
-        # ENTJ
-        # ENFP
-        # INFP
-        # ENTP
-        # ISTJ
-        # INTP
-        # INFJ
-        # ISFJ
-        # ISTP
-        # ESFP
-        # INTJ
-        odp = 'jesteś myślicielem'
+        print("Suma do losowego testu", wplywy) # {'Introwersja': 2, 'Ekstrawersja': 2, 'Intuicja': 2, 'Poznanie': 2, 'Odczuwanie': 2, 'Myślenie': 2, 'Osądzanie': 1, 'Obserwacja': 1}
+        result = ''
+        if 'Introwersja' not in wplywy or ('Ekstrawersja' in wplywy and wplywy['Ekstrawersja'] > wplywy['Introwersja']):
+            result += 'E'
+        else:
+            result += 'I'
+        if 'Intuicja' not in wplywy or ('Poznanie'  in wplywy and wplywy['Poznanie'] > wplywy['Intuicja']):
+            result += 'S'
+        else:
+            result += 'N'
+        if 'Odczuwanie' not in wplywy or ('Myślenie'  in wplywy and wplywy['Myślenie'] > wplywy['Odczuwanie']):
+            result += 'F'
+        else:
+            result += 'T'
+        if 'Obserwacja' not in wplywy or ('Osądzanie' in wplywy and wplywy['Osądzanie'] > wplywy['Obserwacja']):
+            result += 'J'
+        else:
+            result += 'P'
+        print(result)
+        odp = result
         return odp
+
+    def stats(self, pytania, pytania_a):
+        # wariacja z powtórzeniami 2^48
+        odpowiedzi = []
+        for i in range(0, len(pytania)):
+            odpowiedzi.append(['Tak', 'Nie'])
+        assert len(pytania) == len(odpowiedzi)
+        wariacje = itertools.product(*odpowiedzi)
+        stats = {}
+        k = []
+        for i in wariacje:
+            zip_pyt_a = zip(pytania, i)
+            result = self.result(dict(zip_pyt_a), pytania_a)
+            print(result)
+            if result in stats:
+                stats[result] += 1
+            else:
+                stats[result] = 1
+        print(stats)
+        print(k)
+        return 'kek', stats
 
     def handle(self, *args, **options):
         print('***** START *****')
         # lista z pytaniami i ich wpływami na cechy osobowości -> do tabeli answersfactors
         pytania = [
             ['Czy lubisz spędzać czas w domu?', ['Tak', 'Introwersja', 1], ['Nie', 'Ekstrawersja', 1]],
-            ['Często zastanawiasz się nad sensem życia?', ['Tak', 'Introwersja', 2], ['Nie', 'Ekstrawersja', 2]],
+            ['Często zastanawiasz się nad sensem życia?', ['Tak', 'Introwersja', 3], ['Nie', 'Ekstrawersja', 2]],
             ['Bardziej przemawiają do mnie sprawdzone, wypróbowane rozwiązania niż twórcze nowatorskie pomysły.', ['Tak', 'Poznanie', 2], ['Nie', 'Intuicja', 2], ['Tak', 'Ekstrawersja', 1]],
             ['Wolisz pracę zespołową niż indywidualną.', ['Nie', 'Introwersja', 1], ['Tak', 'Ekstrawersja', 1], ['Tak', 'Odczuwanie', 1]],
             ['Raczej korzystasz z rad innych ludzi niż ich udzielasz.', ['Nie', 'Osądzanie', 3], ['Tak', 'Obserwacja', 3], ['Tak', 'Introwersja', 1], ['Nie', 'Ekstrawersja', 1]],
@@ -105,6 +126,9 @@ class Command(BaseCommand):
                 else:
                     sum_wag[z[k][1]] += z[k][2]
         print("Ilość pytań", len(pytania), "Suma wag do osobowości", sum_wag)
+
+        #sprawdzmy wszystkie mozliwe resultaty
+        # print('Statystyki', self.stats([z[0] for z in pytania], pytania))
 
         #losujemy odpowiedzi każdego pytania
         test_answers = {}
