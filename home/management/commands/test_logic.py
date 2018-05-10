@@ -51,17 +51,14 @@ class Command(BaseCommand):
         assert len(pytania) == len(odpowiedzi)
         wariacje = itertools.product(*odpowiedzi)
         stats = {}
-        k = []
         for i in wariacje:
             zip_pyt_a = zip(pytania, i)
             result = self.result(dict(zip_pyt_a), pytania_a)
-            print(result)
             if result in stats:
                 stats[result] += 1
             else:
                 stats[result] = 1
         print(stats)
-        print(k)
         return 'kek', stats
 
     def handle(self, *args, **options):
@@ -156,4 +153,3 @@ class Command(BaseCommand):
                   'ISTP': ["analityk systemów komputerowych", "antyterrorysta", "detektyw", "ekonomista", "elektronik", "elektryk", "farmaceuta", "inżynier", "jubiler", "kierowca", "lotnik", "mechanik", "muzyk", "policjant", "pracownik budowlany", "pracownik centrum zarządzania kryzysowego", "pracownik ochrony", "pracownik pogotowia technicznego", "prawnik", "programista komputerowy", "przedsiębiorca", "ratownik", "rolnik", "specjalista IT", "sportowiec", "stolarz", "strażak", "ślusarz", "technik", "żołnierz"],
                   'ESFP': ["agent ubezpieczeniowy", "aktor", "dekorator wnętrz", "doradca", "florysta", "fotograf", "konsultant", "lekarz", "malarz", "muzyk", "nauczyciel", "opiekun", "organizator imprez", "pracownik biura podróży", "pracownik centrum rekreacji", "pracownik działu kadr", "pracownik pomocy społecznej", "prezenter", "projektant mody", "przedsiębiorca", "przedstawiciel handlowy", "psycholog", "ratownik", "recepcjonista", "sanitariusz", "specjalista ds. PR", "stylista", "terapeuta", "trener", "weterynarz"],
                   'INTJ': ["administrator", "analityk finansowy", "analityk systemów komputerowych", "architekt", "designer", "dyrektor ds. badań i rozwoju", "dyrektor wykonawczy", "ekonomista", "fotograf", "informatyk", "inwestor", "inżynier", "koordynator projektu", "lekarz", "menedżer", "nauczyciel", "naukowiec", "pisarz", "polityk prawnik", "planista", "projektant systemów informatycznych", "programista komputerowy", "psycholog", "redaktor", "sędzia", "specjalista ds. oceny ryzyka", "specjalista ds. planowania strategicznego", "technik", "wykładowca akademicki"]}
-        print(zawody)
