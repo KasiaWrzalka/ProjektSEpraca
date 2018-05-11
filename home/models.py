@@ -54,3 +54,26 @@ class Conditions(models.Model):
     value = models.IntegerField()
     factor = models.ForeignKey(Factors, on_delete=models.CASCADE)  # factor_id
     result = models.ForeignKey(Results, on_delete=models.CASCADE)  # result_id
+
+class Jobs(models.Model):
+    name = models.CharField(max_length=100)
+    result_title = models.CharField(max_length=100)
+    # ("Niezależność": "autonomia", "Atmosfera i kontaty społeczne": "atmosfera",
+    #  "Kierowanie innymi": "kierowanie", "Dobre warunki finansowe": "finanse",
+    #  "Jasne cele i zadania": "zadania", "Urozmaicenie": "urozmaicenie",
+    #  "Produktywność i wyzwania": "wyzwania", "Uznanie, pochwały": "uznanie",
+    #  "Rozwój osobisty": "rozwoj", "Niski poziom stresu": "stres")
+    autonomia = models.IntegerField()
+    atmosfera = models.IntegerField()
+    kierowanie = models.IntegerField()
+    finanse = models.IntegerField()
+    zadania = models.IntegerField()
+    urozmaicenie = models.IntegerField()
+    wyzwania = models.IntegerField()
+    uznanie = models.IntegerField()
+    rozwoj = models.IntegerField()
+    stres = models.IntegerField()
+
+class ResultsJobs(models.Model):
+    result = models.ForeignKey(Results, on_delete=models.CASCADE)
+    job = models.ForeignKey(Jobs, on_delete=models.CASCADE)

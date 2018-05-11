@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.IndexView),
     path('test/', views.TestMbtiView, name='test'),
-    path('<int:test_id>/vote/', views.vote, name='vote')
+    path('<int:test_id>/vote/', views.vote, name='vote'),
+    path('<slug:title>/krok2', views.TestPropertiesView, name='TestProperties')
 ]
