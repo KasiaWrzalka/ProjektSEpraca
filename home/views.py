@@ -41,7 +41,8 @@ def vote(request, test_id):
         try:
             if len(questions) == len(request.POST) - 1:
                 odp = MyQuestions.result(questions_answers)
-                return render(request, 'home/results.html', {'name': odp[0], 'title': odp[1], 'description': odp[2]})
+                print(odp)
+                return render(request, 'home/results.html', {'name': odp[0], 'title': odp[1], 'description': odp[2], 'jobs': odp[3]})
             else:
                 odp = u"Uzupełnij wszystkie pytania. Wróć do testu."
                 return render(request, 'home/results.html', {'name': odp})
@@ -49,4 +50,5 @@ def vote(request, test_id):
             print(u'błąd')
             return render(request, 'home/results.html', {'odp': "Wysłałeś pustą odpowiedź. Sprójbuj jeszcze raz!."})
     elif test_id == 2:
+        print(request.POST)
         return render(request, 'home/result_job.html', {'name': 'ostateczne rozwiazanie'})

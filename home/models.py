@@ -57,7 +57,7 @@ class Conditions(models.Model):
 
 class Jobs(models.Model):
     name = models.CharField(max_length=100)
-    result_title = models.CharField(max_length=100)
+    # result_title = models.CharField(max_length=100)
     # ("Niezależność": "autonomia", "Atmosfera i kontaty społeczne": "atmosfera",
     #  "Kierowanie innymi": "kierowanie", "Dobre warunki finansowe": "finanse",
     #  "Jasne cele i zadania": "zadania", "Urozmaicenie": "urozmaicenie",

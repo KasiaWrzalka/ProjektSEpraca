@@ -8,7 +8,8 @@ class Command(BaseCommand):
         print('***** START *****')
         cursor = connection.cursor()
 
-        MBTI_zawody = {'ESTJ': ["bibliotekarz", "farmaceuta", "informatyk", "koordynator projektu", "księgowy",
+        MBTI_zawody = {
+            'ESTJ': ["bibliotekarz", "farmaceuta", "informatyk", "koordynator projektu", "księgowy",
                                 "kucharz", "menedżer", "nauczyciel", "naukowiec", "pracownik banku", "policjant",
                                 "polityk", "prawnik", "sprzedawca", "żołnierz"],
                        'ESFJ': ["prawnik", "aktor", "pracownik banku", "duchowny", "farmaceuta", "fizjoterapeuta",
@@ -93,6 +94,12 @@ class Command(BaseCommand):
         #     zawody_cechy[zawod] = {key: 1 for key in cechy}
         # print(zawody_cechy)
 
+        # r = "SELECT `id`, `title` FROM `home_results`"
+        # cursor.execute(r)
+        # re = cursor.fetchall()
+        # results = dict((y, x) for x, y in re)
+        # print(results)
+
         zawody_cechy = {
                            'aktor': {'Niezależność': 1, 'Atmosfera i kontakty społeczne': 3, 'Kierowanie innymi': 1, 'Dobre warunki finansowe': 2, 'Jasne cele i zadania': 1, 'Urozmaicenie': 3, 'Produktywność i wyzwania': 3, 'Uznanie, pochwały': 3, 'Rozwój osobisty': 3, 'Niski poziom stresu': 1},
                            'analityk': {'Niezależność': 1, 'Atmosfera i kontakty społeczne': 3, 'Kierowanie innymi': 2, 'Dobre warunki finansowe': 3, 'Jasne cele i zadania': 1, 'Urozmaicenie': 3, 'Produktywność i wyzwania': 3, 'Uznanie, pochwały': 2, 'Rozwój osobisty': 2, 'Niski poziom stresu': 1},
@@ -150,7 +157,50 @@ class Command(BaseCommand):
             'weterynarz': {'Niezależność': 1, 'Atmosfera i kontakty społeczne': 2, 'Kierowanie innymi': 2, 'Dobre warunki finansowe': 2, 'Jasne cele i zadania': 3, 'Urozmaicenie': 3, 'Produktywność i wyzwania': 2, 'Uznanie, pochwały': 2, 'Rozwój osobisty': 3, 'Niski poziom stresu': 2},
             'żołnierz': {'Niezależność': 1, 'Atmosfera i kontakty społeczne': 2, 'Kierowanie innymi': 1, 'Dobre warunki finansowe': 2, 'Jasne cele i zadania': 3, 'Urozmaicenie': 2, 'Produktywność i wyzwania': 3, 'Uznanie, pochwały': 2, 'Rozwój osobisty': 3, 'Niski poziom stresu': 1}}
 
-        print(zawody_cechy, len(zawody_cechy))
+        # 'aktor': {'Niezależność': 1, 'Atmosfera i kontakty społeczne': 3, 'Kierowanie innymi': 1,
+        #           'Dobre warunki finansowe': 2, 'Jasne cele i zadania': 1, 'Urozmaicenie': 3,
+        #           'Produktywność i wyzwania': 3, 'Uznanie, pochwały': 3, 'Rozwój osobisty': 3,
+        #           'Niski poziom stresu': 1}
+        # for i, j in zawody_cechy.items():
+        #     sql = "INSERT INTO `sonji1_kasia`.`home_jobs` (`id`, `name`, `autonomia`, `atmosfera`, `kierowanie`, " \
+        #           "`finanse`, `zadania`, `urozmaicenie`, `wyzwania`, `uznanie`, `rozwój`, `stres`) " \
+        #           "VALUES (NULL, '{}', '{}', '{}', " \
+        #           "'{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(i,
+        #                                                                    j['Niezależność'],
+        #                                                                    j['Atmosfera i kontakty społeczne'],
+        #                                                                    j['Kierowanie innymi'],
+        #                                                                    j['Dobre warunki finansowe'],
+        #                                                                    j['Jasne cele i zadania'],
+        #                                                                    j['Urozmaicenie'],
+        #                                                                    j['Produktywność i wyzwania'],
+        #                                                                    j['Uznanie, pochwały'],
+        #                                                                    j['Rozwój osobisty'],
+        #                                                                    j['Niski poziom stresu'])
+        #
+        #     print(sql)
+            # cursor.execute(sql)
+
+        print(MBTI_zawody)
+
+        r = "SELECT `id`, `title` FROM `home_results`"
+        cursor.execute(r)
+        re = cursor.fetchall()
+        results = dict((y, x) for x, y in re)
+        print(results)
+        # {'ESTJ': 6, 'ESFJ': 7, 'ESTP': 8, 'ISFP': 9, 'ENFJ': 10, 'ENTJ': 11, 'ENFP': 12, 'INFP': 13, 'ENTP': 14,
+        #  'ISTJ': 15, 'INTP': 16, 'INFJ': 17, 'ISFJ': 18, 'ISTP': 19, 'ESFP': 20, 'INTJ': 21}
+
+        j = "SELECT `id`, `name` FROM `home_jobs`"
+        cursor.execute(j)
+        jo = cursor.fetchall()
+        jobs = dict((y, x) for x, y in jo)
+        print(jobs)
+
+        for i, j in MBTI_zawody.items():
+            for k in j:
+                sql1 = "INSERT INTO `sonji1_kasia`.`home_resultsjobs` (`id`, `result_id`, `job_id`) VALUES (NULL, '{}', '{}')".format(results[i], jobs[k])
+                print(sql1)
+                # cursor.execute(sql1)
 
 
         print('***** END *****')

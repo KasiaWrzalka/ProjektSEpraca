@@ -7,7 +7,7 @@
             <label for="{{ question.id }}">{{ forloop.counter }}. {{ question }}</label><br>
             {% for value in value_answers %}
                 <input type="radio" name="{{ question.id }}" id="{{ value.id }}" value="{{ value.id }}" />
-                <label for="{{ value.id }}">{{ value }}</label><br />
+                <label for="{{ value.id }}">{{ value }}</label><br>
             {% endfor %}
             <br>
     {%  endfor %}

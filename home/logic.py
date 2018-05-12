@@ -56,4 +56,5 @@ class MyQuestions(object):
         name = result.name
         title = result.title
         description = result.description
-        return (name, title, description)
+        jobs = [i.job.name for i in result.resultsjobs_set.all()]
+        return (name, title, description, jobs)
