@@ -1,18 +1,26 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
-
+    <div class="test">
+        <h1>Krok 2. Określenie cech pożądanych na rynku pracy</h1>
+        <h1>Instrukcja obsługi:</h1>
+<p> -> Zastanów się na ile zamieszczone niżej właściwości/cechy pracy są dla Ciebie ważne czy pożądane. Następnie obok każdej z nich zakreśl cyfrę, która najbardziej odzwierciedla Twoje aktualne preferencje, używając poniższej skali:
+    <br>1 - nie ważne
+    <br>2 - ważne
+    <br>3 - bardzo ważne</p>
+    <br>
     <form action="{% url 'vote' 2 %}" method="post">
     {% csrf_token %}
         {%  for question , value_answers in question_answers.items %}
-            <label for="{{ question.id }}">{{ forloop.counter }}. {{ question }}</label><br>
+            <p><label for="{{ question.id }}">{{ forloop.counter }}. {{ question }}</label></p>
             {% for value in value_answers %}
-                <input type="radio" name="{{ question.id }}" id="{{ value.id }}" value="{{ value.id }}" />
-                <label for="{{ value.id }}">{{ value }}</label>
+                <p><input type="radio" name="{{ question.id }}" id="{{ value.id }}" value="{{ value.id }}" />
+                <label for="{{ value.id }}">{{ value }}</label></p>
             {% endfor %}
             <br><br>
     {%  endfor %}
-    <input type="submit" value="Wyślij!" />
+    <input type="hidden" name="title" value="{{ title }}" />
+    <h1><input type="submit" value="Wyślij!" /></h1>
     </form>
-
+    </div>
 {% endblock %}

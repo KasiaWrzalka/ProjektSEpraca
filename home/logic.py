@@ -1,7 +1,8 @@
 from django.shortcuts import render_to_response, render
 from django.views.decorators.csrf import csrf_exempt
-from .models import Questions, AnswersFactors, Answers, Results
+from .models import Questions, AnswersFactors, Answers, Results, Jobs
 import random
+import operator
 
 class MyQuestions(object):
 
@@ -9,7 +10,6 @@ class MyQuestions(object):
         """
         :return: wszystkie pytania z danego testu
         """
-        questions = Questions.objects.filter(test=test_id)
         questions = Questions.objects.filter(test=test_id)
         return questions
 
@@ -58,3 +58,123 @@ class MyQuestions(object):
         description = result.description
         jobs = [i.job.name for i in result.resultsjobs_set.all()]
         return (name, title, description, jobs)
+
+    def result_job(questions_answers, title):
+        questions_answers2 = {}
+        for k, v in questions_answers.items():
+            questions_answers2[Questions.objects.get(id=k)] = Answers.objects.get(id=v[0])
+
+        result = Results.objects.get(title=title).resultsjobs_set.all()
+        wynik = {}
+        for i in result:
+            wynik[i.job.name] = 0
+        for i, j in questions_answers2.items():
+            if str(j) == "2":
+                for k in result:
+                    if i.title == "Niezależność":
+                        if k.job.autonomia == 0:
+                            wynik[str(k.job.name)] -= 1
+                        elif k.job.autonomia == 1:
+                            wynik[str(k.job.name)] += 1
+                    elif i.title == "Atmosfera i kontakty społeczne":
+                        if k.job.atmosfera == 0:
+                            wynik[str(k.job.name)] -= 1
+                        elif k.job.atmosfera == 1:
+                            wynik[str(k.job.name)] += 1
+                    elif i.title == "Kierowanie innymi":
+                        if k.job.kierowanie == 0:
+                            wynik[str(k.job.name)] -= 1
+                        elif k.job.kierowanie == 1:
+                            wynik[str(k.job.name)] += 1
+                    elif i.title == "Dobre warunki finansowe":
+                        if k.job.finanse == 0:
+                            wynik[str(k.job.name)] -= 1
+                        elif k.job.finanse == 1:
+                            wynik[str(k.job.name)] += 1
+                    elif i.title == "Jasne cele i zadania":
+                        if k.job.zadania == 0:
+                            wynik[str(k.job.name)] -= 1
+                        elif k.job.zadania == 1:
+                            wynik[str(k.job.name)] += 1
+                    elif i.title == "Urozmaicenie":
+                        if k.job.urozmaicenie == 0:
+                            wynik[str(k.job.name)] -= 1
+                        elif k.job.urozmaicenie == 1:
+                            wynik[str(k.job.name)] += 1
+                    elif i.title == "Produktywność i wyzwania":
+                        if k.job.wyzwania == 0:
+                            wynik[str(k.job.name)] -= 1
+                        elif k.job.wyzwania == 1:
+                            wynik[str(k.job.name)] += 1
+                    elif i.title == "Uznanie, pochwały":
+                        if k.job.uznanie == 0:
+                            wynik[str(k.job.name)] -= 1
+                        elif k.job.uznanie == 1:
+                            wynik[str(k.job.name)] += 1
+                    elif i.title == "Rozwój osobisty":
+                        if k.job.rozwoj == 0:
+                            wynik[str(k.job.name)] -= 1
+                        elif k.job.rozwoj == 1:
+                            wynik[str(k.job.name)] += 1
+                    elif i.title == "Niski poziom stresu":
+                        if k.job.stres == 0:
+                            wynik[str(k.job.name)] -= 1
+                        elif k.job.stres == 1:
+                            wynik[str(k.job.name)] += 1
+            elif str(j) == "3":
+                for k in result:
+                    if i.title == "Niezależność":
+                        if k.job.autonomia == 0:
+                            wynik[str(k.job.name)] -= 2
+                        elif k.job.autonomia == 1:
+                            wynik[str(k.job.name)] += 2
+                    elif i.title == "Atmosfera i kontakty społeczne":
+                        if k.job.atmosfera == 0:
+                            wynik[str(k.job.name)] -= 2
+                        elif k.job.atmosfera == 1:
+                            wynik[str(k.job.name)] += 2
+                    elif i.title == "Kierowanie innymi":
+                        if k.job.kierowanie == 0:
+                            wynik[str(k.job.name)] -= 2
+                        elif k.job.kierowanie == 1:
+                            wynik[str(k.job.name)] += 2
+                    elif i.title == "Dobre warunki finansowe":
+                        if k.job.finanse == 0:
+                            wynik[str(k.job.name)] -= 2
+                        elif k.job.finanse == 1:
+                            wynik[str(k.job.name)] += 2
+                    elif i.title == "Jasne cele i zadania":
+                        if k.job.zadania == 0:
+                            wynik[str(k.job.name)] -= 2
+                        elif k.job.zadania == 1:
+                            wynik[str(k.job.name)] += 2
+                    elif i.title == "Urozmaicenie":
+                        if k.job.urozmaicenie == 0:
+                            wynik[str(k.job.name)] -= 2
+                        elif k.job.urozmaicenie == 1:
+                            wynik[str(k.job.name)] += 2
+                    elif i.title == "Produktywność i wyzwania":
+                        if k.job.wyzwania == 0:
+                            wynik[str(k.job.name)] -= 2
+                        elif k.job.wyzwania == 1:
+                            wynik[str(k.job.name)] += 2
+                    elif i.title == "Uznanie, pochwały":
+                        if k.job.uznanie == 0:
+                            wynik[str(k.job.name)] -= 2
+                        elif k.job.uznanie == 1:
+                            wynik[str(k.job.name)] += 2
+                    elif i.title == "Rozwój osobisty":
+                        if k.job.rozwoj == 0:
+                            wynik[str(k.job.name)] -= 2
+                        elif k.job.rozwoj == 1:
+                            wynik[str(k.job.name)] += 2
+                    elif i.title == "Niski poziom stresu":
+                        if k.job.stres == 0:
+                            wynik[str(k.job.name)] -= 2
+                        elif k.job.stres == 1:
+                            wynik[str(k.job.name)] += 2
+
+        highest = max(wynik.values())
+        odp = [k for k, v in wynik.items() if v == highest]
+
+        return odp

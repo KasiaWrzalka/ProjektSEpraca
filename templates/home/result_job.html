@@ -2,8 +2,14 @@
 
 {% block content %}
 <div class="test">
-<h1>akuku {{ name }}</h1>
-    <p></p>
+{% if kompletne == "tak" %}
+    <p>Twoja osobowość wg MBTI to</p>
+<h1>{{ title }} - {{ result.name }}</h1>
+    <p>{{ result.description }}</p>
+    <p>Zawody pasujące do osobowości {{ title }} to: {% for job in jobs%}{{ job }}, {%  endfor %}</p>
+    <p>Najbardziej pasujący zawód do wybranych przez Ciebie cech to:</p>
+    <h1>{% for zawod in odp %}{{ zawod }}, {%  endfor %}</h1>
+{% endif %}
 </div>
 
 {% endblock %}

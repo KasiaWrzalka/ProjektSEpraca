@@ -2,9 +2,13 @@
 
 {% block content %}
 <div class="test">
-<h1>{{ name }} {{ title }}</h1>
-    <p>{{ description }} Osobowość {{ title }} w naturalny sposób pasuje do zawodów: {% for job in jobs %}{{ job }}, {% endfor %}</p>
-<h2>Przejdź do kolejnego kroku aby dowiedzieć się jaki zawód najbardziej pasuje do Twojej osobowości: <a href="/{{ title }}/krok2">Krok 2</a></h2>
+<h1>{{ odp }} </h1>
+{% if kompletne == "tak" %}
+<h1>Super!</h1>
+    <p>Znamy już Twoją osobowość, przejdz teraz do kolejnego kroku aby dowiedzieć się jaka jest Twoja osobowość,
+        Twoje silne i słabe strony oraz jaki zawód najbardziej pasuje do Twojej osobowości: </p>
+    <h1><a href="/{{ title }}/krok2">Krok 2</a></h1>
+{% endif %}
 </div>
 
 {% endblock %}

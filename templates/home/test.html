@@ -1,17 +1,26 @@
 {% extends 'home/base.html' %}
 
 {% block content %}
+        <div class="test">
+        <h1>Krok 1. Test osobowości MBTI</h1>
+        <h1>Instrukcja obsługi:</h1>
+        <p>-> Test składa się z 48 pytań/stwierdzeń na które można odpowiedzieć 'Tak' lub 'Nie.</p>
+        <p>-> Celem testu jest określenie typu osobowości, nie zaś inteligencji, wiedzy czy zdolności. W teście nie ma dobrych i złych odpowiedzi.</p>
+        <p>-> Wybieraj odpowiedzi zgodnie z tym jak zachowujesz się w opisanych sytuacjach, nie zaś jak chciałbyś lub jak należałoby się zachować.</p>
+        <p>-> Aby dostać odpowiedź musisz udzielić odpowiedzi na wszystkie pytania. W przypadkach, w których nie możesz w pełni utożsamić się z żadną z zaproponowanych odpowiedzi, zaznacz tę, która jest Ci bliższa.</p>
+        <p>-> Czas testu nie jest ograniczony, nie musisz się spieszyć, ale nie zastanawiaj się nad odpowiedziami zbyt długo. </p>
+        <h1> Zaczynamy! </h1>
+        <br>
     <form action="{% url 'vote' 1 %}" method="post">
     {% csrf_token %}
         {%  for question , value_answers in question_answers.items %}
-            <label for="{{ question.id }}">{{ forloop.counter }}. {{ question }}</label><br>
+            <p><label for="{{ question.id }}">{{ forloop.counter }}. {{ question }}</label></p>
             {% for value in value_answers %}
-                <input type="radio" name="{{ question.id }}" id="{{ value.id }}" value="{{ value.id }}" />
-                <label for="{{ value.id }}">{{ value }}</label><br>
+                <p><input type="radio" name="{{ question.id }}" id="{{ value.id }}" value="{{ value.id }}" />
+                <label for="{{ value.id }}">{{ value }}</label></p>
             {% endfor %}
-            <br>
     {%  endfor %}
-    <input type="submit" value="Wyślij!" />
+    <h1><input type="submit" value="Wyślij!" /></h1>
     </form>
-
+        </div>
 {% endblock %}
